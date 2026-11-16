@@ -109,6 +109,12 @@ typedef unsigned int u32;
  */
 #define CS_GUEST_SIZE 0x0000f160u
 #define CS_PROCESSORS 0x0000f164u
+/*
+ * The guest's CAP and the heap bytes the HOST owns (x86/Memory.js CS_GUEST_CAP, CS_HEAP_HOSTBYTES,
+ * the authority): heap.c `guestLimit` is their sum, how far the guest may grow.
+ */
+#define CS_GUEST_CAP      0x0000f168u
+#define CS_HEAP_HOSTBYTES 0x0000f16cu
 
 /**
  * THE PROCESS CENSUS — live and peak counts every worker raises and anyone holding the memory reads
