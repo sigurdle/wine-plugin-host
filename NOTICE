@@ -1,0 +1,51 @@
+wine-plugin-host -- the Wine-derived parts of a Windows plug-in host
+=====================================================================
+
+Some files in this repository are ported or derived from Wine and are therefore
+derivative works of Wine, licensed under the GNU Lesser General Public License,
+version 2.1 or later (see LICENSE). Each of them carries Wine's copyright lines
+and the LGPL notice in its header, and names the Wine source it came from.
+
+Wine -- Copyright (c) the Wine project authors -- https://www.winehq.org/
+Source: https://gitlab.winehq.org/wine/wine (mirror: https://github.com/wine-mirror/wine)
+
+They are part of a Windows plug-in host that runs inside a separate, closed-source
+application, compiled to WebAssembly (the C files) or loaded as JavaScript modules
+(the .js files). That application is NOT part of this library and is not covered by
+this license; this repository is the "corresponding source" for the Wine-derived
+parts, provided to satisfy LGPL-2.1 section 6.
+
+File -> Wine source it is derived from
+--------------------------------------
+  host/wasm/cxxeh.c       dlls/msvcrt/except_i386.c, except.c, cppexcept.h, cxx.h
+                          (__CxxFrameHandler: frame handler, catch search, unwind)
+                          Copyright 2000 Jon Griffiths, 2002 Alexandre Julliard,
+                          2005 Juan Lang
+  host/wasm/drawedge.c    dlls/user32/uitools.c (DrawEdge tables, UITOOLS95_DrawRectEdge)
+                          Copyright 1997 Dimitrie O. Paun, 1997 Bertho A. Stultiens
+  host/wasm/monodither.c  dlls/win32u/dibdrv/primitives.c, objects.c
+                          (bayer_8x8, create_dither_masks_1, brush_needs_dithering)
+                          Copyright 2011 Huw Davies
+  win32/seh4.js           dlls/msvcrt/except_i386.c (_except_handler4_common,
+                          msvcrt_local_unwind4, get_scopetable_v4)
+                          Copyright 2000 Jon Griffiths, 2002 Alexandre Julliard,
+                          2005 Juan Lang
+  win32/cxxeh.js          dlls/msvcrt/except_i386.c (call_handler, continue_after_catch,
+                          the __CxxFrameHandler entry: the x86 side of cxxeh.c)
+                          Copyright 2000 Jon Griffiths, 2002 Alexandre Julliard,
+                          2005 Juan Lang
+  win32/wine-cursors/     dlls/user32/resources/ocr_*.cur at commit 32ccc0b9e, unchanged
+                          (the system cursors; see NOTICE.txt there), and
+                          build-wine-cursors.mjs, which generates the shipped
+                          wineCursors.js from them
+                          Copyright 2001 Alexandre Julliard (dlls/user32/user32.rc)
+
+Not derived from Wine, and not covered by the LGPL
+--------------------------------------------------
+  host/wasm/hostimports.h, guest.h, layout.h
+                          the host's own headers, included by cxxeh.c; published
+                          only so the derived files can be recompiled
+  host/wasm/obj/*.o       the host's own code, compiled; published only so the
+                          derived files can be relinked (LGPL-2.1 section 6a)
+  host/wasm/relink.sh, host/wasm/obj/compile.args, host/wasm/obj/link.args
+                          the build that relinks them

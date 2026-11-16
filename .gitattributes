@@ -1,0 +1,4 @@
+* text=auto
+*.o binary
+*.sh text eol=lf
+*.cur binary
