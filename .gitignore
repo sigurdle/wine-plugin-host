@@ -1,2 +1,6 @@
 # relink.sh output
 host/wasm/hostfn.wasm
+# relink.sh compiles the derived sources to these
+host/wasm/obj/cxxeh.o
+host/wasm/obj/drawedge.o
+host/wasm/obj/monodither.o
