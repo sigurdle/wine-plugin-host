@@ -37,7 +37,7 @@ typedef unsigned int u32;
  * are here so the map above is whole and so GDI_BASE is derived the way Memory.js derives it.
  */
 #define HOSTFN_DATA_BASE  0x000b0000u
-#define HOSTFN_DATA_BYTES 0x00010000u
+#define HOSTFN_DATA_BYTES 0x00020000u
 
 #define GDI_BASE    (HOSTFN_DATA_BASE + HOSTFN_DATA_BYTES)
 #define GDI_BYTES   0x00100000u						/* the DC, save, surface, object, font, PHOTOSHOP, DOOR, COM and WINDOW tables */

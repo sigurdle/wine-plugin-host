@@ -30,6 +30,7 @@ __attribute__((import_module("env"), import_name("say"))) void say(u32 what, u32
 #define FATAL_UNALIGNED_INTERLOCKED 1u
 #define FATAL_TABLE_FULL            2u		/* addr = how many entries a fixed table would have needed */
 #define FATAL_NOT_IMPLEMENTED       3u		/* addr = the number of a vtable slot that must never be reached */
+#define FATAL_FORMAT_NOT_IMPLEMENTED 4u		/* addr = the printf conversion character (formatmessage.c) an insert names */
 __attribute__((import_module("env"), import_name("fatal"), noreturn)) void fatal(u32 reason, u32 addr);
 
 

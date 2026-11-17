@@ -15,7 +15,7 @@
 -Wl,--export=__stack_pointer
 -Wl,--export=__data_end
 -Wl,--shared-memory
--Wl,--max-memory=2216427520
+-Wl,--max-memory=2216493056
 obj/user32.o
 obj/kernel32.o
 obj/codepages.o
@@ -40,3 +40,5 @@ obj/heap.o
 obj/addressspace.o
 obj/cxxeh.o
 obj/dpapi.o
+obj/formatmessage.o
+obj/winerror.o

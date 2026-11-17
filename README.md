@@ -14,10 +14,15 @@ uses them and is not covered by this license.
 | Path | What | Wine source |
 |------|------|-------------|
 | `host/wasm/cxxeh.c` | msvcrt's `__CxxFrameHandler` (C++ exceptions, 32-bit x86) | `dlls/msvcrt/except_i386.c`, `except.c`, `cppexcept.h`, `cxx.h` |
+| `host/wasm/codepage20127.c` | code page 20127's tables, the "C" locale's code page in Wine's msvcrt | `nls/c_20127.nls` |
+| `host/wasm/formatmessage.c` | `FormatMessageA`/`FormatMessageW` | `dlls/kernelbase/locale.c`, `dlls/ntdll/rtlstr.c` |
+| `host/wasm/winerror.c`, `tools/build-winerror.mjs` | the English system message table, and its generator | `dlls/kernelbase/winerror.mc` |
 | `host/wasm/drawedge.c` | DrawEdge's rectangle edges | `dlls/user32/uitools.c` |
 | `host/wasm/monodither.c` | a solid brush on a 1-bpp surface: the 8x8 ordered dither | `dlls/win32u/dibdrv/primitives.c`, `objects.c` |
 | `win32/seh4.js` | msvcrt's `_except_handler4_common` (SEH4 frames) | `dlls/msvcrt/except_i386.c` |
 | `win32/cxxeh.js` | the emulated CPU's side of `cxxeh.c` | `dlls/msvcrt/except_i386.c` |
+| `win32/dialogManager.js` | `IsDialogMessage`, the tab and group walks, `WM_NEXTDLGCTL` | `dlls/user32/dialog.c`, `defdlg.c` |
+| `win32/editText.js` | the EDIT control's typing, keys, undo buffer, clipboard and mouse | `dlls/user32/edit.c` |
 | `win32/wine-cursors/` | the system cursors (`ocr_*.cur`, unchanged) and `build-wine-cursors.mjs`, which makes the shipped `wineCursors.js` from them | `dlls/user32/resources` |
 | `host/wasm/relink.sh`, `host/wasm/obj/` | everything needed to relink `hostfn.wasm` (below) | -- |
 
