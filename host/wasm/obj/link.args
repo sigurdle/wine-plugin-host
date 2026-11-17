@@ -39,3 +39,4 @@ obj/aftereffects.o
 obj/heap.o
 obj/addressspace.o
 obj/cxxeh.o
+obj/dpapi.o
