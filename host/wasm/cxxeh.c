@@ -37,9 +37,9 @@
  *
  * Wine's handler is x86 code on the thread's own stack; this is wasm, and the thread is emulated.
  * So every structure is read through its guest address by offset, and four things Wine does in
- * place are imports (win32/cxxeh.js answers them):
+ * place are imports (win32/cxxeh.js handles them):
  *  - a catch block, an unwind funclet, a copy constructor and a destructor are GUEST code:
- *    `ehCallGuest` runs one on the emulated CPU and answers its EAX (Wine's call_handler,
+ *    `ehCallGuest` runs one on the emulated CPU and returns its EAX (Wine's call_handler,
  *    call_copy_ctor, call_dtor);
  *  - the frame for exceptions inside a catch block (`catch_func_nested_frame`) is a C local in
  *    Wine; here it must be guest memory, because it is linked into the guest's SEH chain and the

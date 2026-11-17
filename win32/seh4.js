@@ -38,7 +38,7 @@
  * cookie, each `*(ebp + offset) ^ (ebp + xor)` handed to the guest's `__security_check_cookie`
  * (fastcall, ECX), which reports a failure and ends the process itself. They are validated on entry,
  * on both paths; when unwinding, again after the `__finally`s if the frame had a try level to leave;
- * when a filter answers EXECUTE_HANDLER, again after the frame's own local unwind (which itself
+ * when a filter returns EXECUTE_HANDLER, again after the frame's own local unwind (which itself
  * checks nothing) and before the except block.
  *
  * WARNING: NOT DONE: destroying a C++ exception object an except block catches (`__DestructExceptionObject`),
@@ -56,7 +56,7 @@ const w32 = (cpu, a, v) => cpu.mem.write32(a >>> 0, v >>> 0, cpu.eip);
 /** The decoded scope table: the frame's pointer XOR the cookie. */
 function scopeTable4(cpu, cookiePtr, reg) { return (r32(cpu, reg + 8) ^ r32(cpu, cookiePtr)) >>> 0; }
 
-/** Call a filter or finally funclet: no arguments, the frame's EBP, the answer in EAX. */
+/** Call a filter or finally funclet: no arguments, the frame's EBP, the result in EAX. */
 function callFunclet(cpu, addr, frameEbp)
 {
 	const saved = cpu.regs[EBP];

@@ -28,9 +28,9 @@ __attribute__((import_module("env"), import_name("guestFault"), noreturn)) void 
 static inline u32 guestSize(void) { return *(const u32 *)CS_GUEST_SIZE; }
 
 /**
- * Do the `n` bytes at `p` lie inside the guest? For an entry that answers an address it cannot
+ * Do the `n` bytes at `p` lie inside the guest? For an entry that returns an address it cannot
  * reach with a FAILURE RETURN rather than a fault — a Win32 entry where Windows was observed to
- * (each such caller quotes the oracle line), a Photoshop suite whose answer is an OSErr or NULL —
+ * (each such caller quotes the oracle line), a Photoshop suite whose result is an OSErr or NULL —
  * and for a caller that bounds a whole span once and then walks it. In 64 bits, because `p + n`
  * wraps in 32.
  */

@@ -103,7 +103,7 @@ export function replaceSel(e, str, ctx, undo = true, update = true)
 
 /**
  * EDIT_EM_Undo: what the last run of typing replaced comes back, selected; the undo buffer then
- * holds the typing, so a second undo redoes it. A read-only single-line EDIT answers TRUE and does
+ * holds the typing, so a second undo redoes it. A read-only single-line EDIT returns TRUE and does
  * nothing.
  */
 export function undo(e, ctx)

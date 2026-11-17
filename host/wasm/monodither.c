@@ -25,7 +25,7 @@
  * WHERE THIS DIFFERS FROM WINE, AND WHY: Windows 11 itself is the oracle
  * (tmp/win32-oracle/monodither-2026-11-15.log, monopen-2026-11-15.log). Wine's matrix is the one
  * Windows uses, but Wine lights a pixel when `gray + bayer > 63`, which puts 0x808080's first row
- * at 0x55; Windows answers 0xaa -- a pixel is WHITE when its matrix entry is BELOW the level. The
+ * at 0x55; Windows returns 0xaa -- a pixel is WHITE when its matrix entry is BELOW the level. The
  * level is fitted to every oracle color, bit for bit: luminance 30/59/11 (R, G, B of the
  * COLORREF), then (Y + 1) >> 2, so 0x7f7f7f is 32 (half), 0xfefefe 63 (one black pixel) and
  * 0x020202 0 (all black). "color 0000ff: aaaa 4444 ..." is level 19, "color 00ff00: eeee ..." 37.

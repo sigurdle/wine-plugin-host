@@ -19,6 +19,7 @@
 obj/user32.o
 obj/kernel32.o
 obj/codepages.o
+obj/codepage20127.o
 obj/arena.o
 obj/gdi32.o
 obj/monodither.o

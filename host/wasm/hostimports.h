@@ -1,5 +1,5 @@
 /*
- * WHAT THIS MODULE LACKS, IT IMPORTS — host/hostfn.js `hostImports` answers every one of these.
+ * WHAT THIS MODULE LACKS, IT IMPORTS — host/hostfn.js `hostImports` returns every one of these.
  *
  * No libc, no heap, 1.5 KB of stack (build.sh): it can print nothing, it cannot go on after an
  * impossible state, and the guest's allocator is not here yet.
@@ -20,7 +20,7 @@
 #define SAY_NO_PIXEL_FORMAT  4u		/* a = the pixel-format GUID in guest memory */
 #define SAY_RESAMPLE_EXTENT  5u		/* a = 1 for the 2-D form, b = six ints: args 11-14, height, width */
 #define SAY_COLOR_INFO_SIZE  6u		/* a = the `infoSize` a plugin passed where this host reads 36 */
-#define SAY_NO_PLATFORM_DATA 7u		/* a = the PF_PlatDataID an effect asked for and this host has no answer for */
+#define SAY_NO_PLATFORM_DATA 7u		/* a = the PF_PlatDataID an effect asked for and this host has no value for */
 __attribute__((import_module("env"), import_name("say"))) void say(u32 what, u32 a, u32 b);
 
 /*
@@ -35,7 +35,7 @@ __attribute__((import_module("env"), import_name("fatal"), noreturn)) void fatal
 
 /*
  * The guest heap: its allocator is x86/Memory.js. The day it is C these are calls, not imports.
- * `heapAlloc` answers 0 for a request the heap cannot hold; `heapSize` answers 0 for an address
+ * `heapAlloc` returns 0 for a request the heap cannot hold; `heapSize` returns 0 for an address
  * that is not a live block, which is how an address the guest made up is told from a block.
  * `heapAlloc`, `heapRealloc` and `heapFree` THROW, through the C frames that called them, the
  * GuestFault a free-list link past the guest's memory is (x86/Memory.js `#reach`), as `guest()`

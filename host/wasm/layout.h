@@ -105,7 +105,7 @@ typedef unsigned int u32;
 /**
  * The guest's SIZE — its address space is [0, size) — and the PROCESSOR COUNT it is told, two words
  * beside the machine words (x86/Memory.js CS_GUEST_SIZE, CS_PROCESSORS, the authority). What
- * addressspace.c answers the address range and `GetSystemInfo` from.
+ * addressspace.c returns the address range and `GetSystemInfo` from.
  */
 #define CS_GUEST_SIZE 0x0000f160u
 #define CS_PROCESSORS 0x0000f164u
@@ -118,7 +118,7 @@ typedef unsigned int u32;
 
 /**
  * THE PROCESS CENSUS — live and peak counts every worker raises and anyone holding the memory reads
- * without a lock: what `GetGuiResources` answers and the app's Task Manager shows. ⚠ x86/Memory.js
+ * without a lock: what `GetGuiResources` returns and the app's Task Manager shows. ⚠ x86/Memory.js
  * `CS_CENSUS` is the authority and says what each word counts; `censusAdd` is its twin there.
  */
 #define CS_CENSUS          0x0000f170u
@@ -206,7 +206,7 @@ static inline void censusAdd(u32 which, int delta)
 #define EXPORT(name) __attribute__((export_name(name)))
 
 /**
- * A FAST PATH's answer (host/hostfn.js HOST_FAST): one i64, bit 32 set = HANDLED and the low word
+ * A FAST PATH's result (host/hostfn.js HOST_FAST): one i64, bit 32 set = HANDLED and the low word
  * EAX, or 0 = DECLINED — the compiled call site then makes the ordinary import call, to the
  * JavaScript entry. kernel32.c's critical sections and TLS, gdi32.c's ExtTextOutA.
  */

@@ -34,7 +34,7 @@
  * the descriptor from EAX go to the C.
  *
  * The C calls back for everything that is guest code or the emulated machine (the `eh*` imports of
- * host/hostfn.js, answered by {@link CXX_EH}):
+ * host/hostfn.js, handled by {@link CXX_EH}):
  *  - an unwind funclet (a destructor), a catch block, a copy constructor and the exception
  *    object's destructor run in a nested `cpu.callGuest`, as win32/seh4.js runs filters;
  *  - Wine's `nested_frame` is taken from the guest stack, and its handler is the thunk

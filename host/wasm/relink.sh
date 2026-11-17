@@ -3,7 +3,7 @@
 # Rebuild hostfn.wasm from the Wine-derived sources beside this script and the objects in obj/.
 #
 # This is the LGPL-2.1 section 6a relinking step for the Windows plug-in host's function module.
-# monodither.c, drawedge.c and cxxeh.c are derived from Wine (LGPL-2.1+) and are statically linked
+# monodither.c, drawedge.c, cxxeh.c and codepage20127.c are derived from Wine (LGPL-2.1+) and are statically linked
 # into hostfn.wasm with the host's own code, which is supplied here only as object files (obj/*.o).
 # Edit the derived sources as you like, run this, and the result is a hostfn.wasm with your version
 # of them linked in.

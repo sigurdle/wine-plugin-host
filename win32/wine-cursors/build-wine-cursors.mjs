@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-// The IDC_ / OCR_ id each Wine file answers (Wine dlls/user32/user32.rc, "Cursors").
+// The IDC_ / OCR_ id each Wine file returns (Wine dlls/user32/user32.rc, "Cursors").
 const FILES = [
 	[32512, "normal"], [32513, "ibeam"], [32514, "wait"], [32515, "cross"], [32516, "up"],
 	[32640, "size"], [32642, "sizenwse"], [32643, "sizenesw"], [32644, "sizewe"], [32645, "sizens"],
