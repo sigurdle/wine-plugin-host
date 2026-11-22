@@ -5,14 +5,15 @@
  * be a `#define GUEST_BASE` in each .c, which was two copies of one number and is now three with
  * `arena.c` — and the day it moves (it has moved twice: 0x10000 → 0x90000 for the code-page
  * table, 0x90000 → 0xb0000 for the per-executor state blocks, 0xb0000 → 0x40b0000 for the pixel
- * arena) a file left behind would address the wrong bytes with no diagnostic at all.
+ * arena, and up 0x20000 with the 8 KB executor blocks of #3117) a file left behind would address the wrong bytes with no diagnostic at all.
  *
  * ⚠ AND `hostfn.wasm` IS A COMMITTED BUILD ARTIFACT: changing anything here means re-running
  * `build.sh`, whose `--max-memory` carries GUEST_BASE + the 2 GB guest ceiling.
  *
  *   [0, 0x10000)          the JIT link map, the machine-wide words, the guest heap's metadata
  *   [0x10000, 0x90000)    the code-page table — 512 KB, one byte per 4 KB of the 2 GB ceiling
- *   [0x90000, 0xb0000)    32 executor state blocks of 4 KB (registers, x87, SSE, C stack)
+ *   [EXEC_BLOCKS, HOSTFN_DATA_BASE)  EXEC_COUNT executor blocks of EXEC_BLOCK_BYTES, [0x90000, 0xd0000):
+ *                         registers, x87, SSE, link map, C stack -- see execblock.h
  *   [HOSTFN_DATA_BASE, GDI_BASE)  this module's static data -- build.sh `--global-base`
  *   [GDI_BASE, ARENA_BASE)    the GDI tables — see gdi32.c
  *   [ARENA_BASE, GUEST_BASE)  the host pixel arena — see arena.c
@@ -35,8 +36,10 @@ typedef unsigned int u32;
  * Where this module's static data is linked (build.sh reads x86/Memory.js and passes it as
  * `--global-base`, then refuses a module whose data ends past the region). No C reads these: they
  * are here so the map above is whole and so GDI_BASE is derived the way Memory.js derives it.
+ * The base is where the executor blocks end; execblock.h (included at the end of this file) has
+ * the block map, and Memory.js takes the same numbers from it.
  */
-#define HOSTFN_DATA_BASE  0x000b0000u
+#define HOSTFN_DATA_BASE  (EXEC_BLOCKS + EXEC_COUNT * EXEC_BLOCK_BYTES)
 #define HOSTFN_DATA_BYTES 0x00020000u
 
 #define GDI_BASE    (HOSTFN_DATA_BASE + HOSTFN_DATA_BYTES)
@@ -213,5 +216,8 @@ static inline void censusAdd(u32 which, int delta)
 typedef unsigned long long u64;
 #define HANDLED(eax) ((1ull << 32) | (u64)(u32)(eax))
 #define DECLINED 0ull
+
+/* Last, once u32 and u64 exist: the executor block map HOSTFN_DATA_BASE is derived from. */
+#include "execblock.h"
 
 #endif

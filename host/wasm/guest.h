@@ -99,9 +99,10 @@ static inline void outHandle(GPTR p, GHANDLE v) { if (p) putHandle(p, v); }
  * calling CPU's STATE BLOCK after its arguments. Its FS base word is the running thread's TEB on
  * whichever worker the thread runs, and the TEB's +0x34 is the last error, where win32/shim.js
  * `setLastError` puts it and the CRT reads `fs:[0x34]` directly. The TEB is 0 before one exists.
- * ⚠ x86/Memory.js CS_FS_BASE_REL and win32/TEB.js TEB_LAST_ERROR are the authority.
+ * The FS base is the block's threadBlock word (execblock.h, which Memory.js CS_FS_BASE_REL
+ * takes too); win32/TEB.js TEB_LAST_ERROR is the authority for the other.
  */
-#define CS_FS_BASE_REL  0x48u
+#define CS_FS_BASE_REL  __builtin_offsetof(struct GL_EXEC_STATE_host, threadBlock)
 #define TEB_LAST_ERROR  0x34u
 /** The error Windows sets for an access to a buffer it caught rather than faulted on. */
 #define ERROR_NOACCESS  998u

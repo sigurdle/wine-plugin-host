@@ -10,12 +10,12 @@
 -Wl,--fatal-warnings
 -Wl,--no-entry
 -Wl,--import-memory
--Wl,--global-base=720896
+-Wl,--global-base=851968
 -Wl,-z,stack-size=16384
 -Wl,--export=__stack_pointer
 -Wl,--export=__data_end
 -Wl,--shared-memory
--Wl,--max-memory=2216493056
+-Wl,--max-memory=2216624128
 obj/user32.o
 obj/kernel32.o
 obj/codepages.o
