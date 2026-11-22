@@ -39,6 +39,7 @@ obj/aftereffects.o
 obj/heap.o
 obj/addressspace.o
 obj/cxxeh.o
+obj/unwind_x64.o
 obj/dpapi.o
 obj/formatmessage.o
 obj/winerror.o

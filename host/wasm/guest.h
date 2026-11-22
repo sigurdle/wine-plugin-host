@@ -6,6 +6,9 @@
 #define HOSTFN_GUEST_H
 
 #include "layout.h"
+#include "guestlayout.h"
+#include "execblock.h"
+#include "guestlayout_check.h"
 
 /**
  * A GUEST ADDRESS. Every pointer a function called by the guest receives is one, because the
@@ -13,6 +16,17 @@
  * it a pointer, which is the one place the base is added.
  */
 typedef u32 GPTR;
+
+/*
+ * The other three guest kinds (briefs/review_np_2026-11/x64_pass.md R1), all u32 in this build, as
+ * GPTR is. Plain u32 / i32 stays for what Windows declares DWORD, LONG, UINT or int.
+ *   GSIZE    a SIZE_T: a length or count from the guest
+ *   GWORD    a pointer-sized integer: WPARAM, LPARAM, LRESULT, LONG_PTR, DWORD_PTR, item and user data
+ *   GHANDLE  a handle token, 32 significant bits on both ABIs
+ */
+typedef u32 GSIZE;
+typedef u32 GWORD;
+typedef u32 GHANDLE;
 
 /*
  * An access that FAULTS, thrown as a GuestFault (host/hostfn.js `hostGuestFault`), which ends the
@@ -64,6 +78,19 @@ static inline u32 get8(GPTR p) { return *(const unsigned char *)guest(p, 1); }
 static inline void put8(GPTR p, u32 v) { *(unsigned char *)guest(p, 1) = (unsigned char)v; }
 /** An out-parameter the caller may have passed as NULL. */
 static inline void out32(GPTR p, u32 v) { if (p) put32(p, v); }
+
+/*
+ * WIDTH-NAMED READERS (R2): a guest pointer, pointer-sized integer or handle in guest memory is read
+ * and written through these, never get32 / put32, so the width is one place when it changes.
+ */
+static inline GPTR getPtr(GPTR p) { return get32(p); }
+static inline void putPtr(GPTR p, GPTR v) { put32(p, v); }
+static inline void outPtr(GPTR p, GPTR v) { if (p) putPtr(p, v); }
+static inline GWORD getWord(GPTR p) { return get32(p); }
+static inline void putWord(GPTR p, GWORD v) { put32(p, v); }
+static inline GHANDLE getHandle(GPTR p) { return get32(p); }
+static inline void putHandle(GPTR p, GHANDLE v) { put32(p, v); }
+static inline void outHandle(GPTR p, GHANDLE v) { if (p) putHandle(p, v); }
 
 /*
  * ─── The calling thread's last error ────────────────────────────────────────────────────────
