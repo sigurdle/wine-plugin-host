@@ -10,10 +10,16 @@
  * are unchanged. The lazy-flag operands and the fault, call and thread-block words have 64-bit
  * slots; the x86 engine uses their low half (the host is little-endian).
  *
- *   [0, ip)                            the THREAD's machine state, copied as a block on a switch
- *   [ip, EXEC_STATE bytes)             the EXECUTOR's protocol words
+ * THE ONE COPY (roadmap E2). The lazy flags (flagOp, flagCf and the three operands; the encoding is
+ * x86/FlagKind.js's), DF, the x87 TOP, status and control words and the instruction pointer are
+ * these words and nothing else: the JS CPU reads and writes them through views, compiled regions
+ * load and store them, and no message carries them. `ip` is the thread's, so it is the last word
+ * of the machine state.
+ *
+ *   [0, regionIp)                      the THREAD's machine state, copied as a block on a switch
+ *   [regionIp, EXEC_STATE bytes)       the EXECUTOR's protocol words
  *   [EXEC_LINKS_REL, +2 KB)            the worker link map, 32 sets x 8 ways x 8 bytes
- *   [.. EXEC_BLOCK_BYTES)              the C stack of hostfn.wasm (5 KB)
+ *   [EXEC_CSTACK_REL, EXEC_BLOCK_BYTES) the C stack of one hostfn.wasm instance (5 KB)
  *
  * EXEC_COUNT blocks start at EXEC_BLOCKS, where the code-page table ends; the module's static data
  * (HOSTFN_DATA_BASE) starts where they end. layout.h includes this file at its end.
@@ -39,6 +45,15 @@
 #define EXEC_LINK_SETS   32
 #define EXEC_LINK_WAYS   8
 #define EXEC_LINKS_BYTES (EXEC_LINK_SETS * EXEC_LINK_WAYS * 8u)
+/*
+ * THE C STACKS (2-05, roadmap E3). Every hostfn.wasm instance spills into one block's tail,
+ * [EXEC_CSTACK_REL, EXEC_BLOCK_BYTES), and nothing but that instance ever moves its pointer: an
+ * executor's instance has its own block's tail; the KERNEL's has the tail of block EXEC_KERNEL,
+ * which runs no guest thread, so a kernel C frame (one waiting on the app, one that upcalls)
+ * never shares bytes with an executor's. guestcall.c checks the floor before every guest call.
+ */
+#define EXEC_CSTACK_REL  0xc00u
+#define EXEC_KERNEL      31
 
 #define GL_EXEC_STATE(FIELD, FIELDS) \
 	FIELDS(gpr,          U64, GPR_COUNT) \
@@ -70,10 +85,13 @@
 	FIELD(codeWrite,     U64) \
 	FIELD(codeWriteLen,  U32) \
 	FIELD(wake,          U32) \
-	FIELDS(busy,         U64, BUSY_WORDS)
+	FIELDS(busy,         U64, BUSY_WORDS) \
+	FIELD(icountTotal,   U64)
 GL_STRUCT(EXEC_STATE, host)
 
 _Static_assert(sizeof(struct GL_EXEC_STATE_host) <= EXEC_LINKS_REL, "the state words run into the link map");
 _Static_assert(EXEC_LINKS_REL + EXEC_LINKS_BYTES < EXEC_BLOCK_BYTES, "no room for the C stack");
+_Static_assert(EXEC_CSTACK_REL == EXEC_LINKS_REL + EXEC_LINKS_BYTES, "the C stack starts where the link map ends");
+_Static_assert(EXEC_KERNEL == EXEC_COUNT - 1, "the kernel's C stack is the last block's");
 
 #endif

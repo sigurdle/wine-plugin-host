@@ -31,6 +31,8 @@ __attribute__((import_module("env"), import_name("say"))) void say(u32 what, u32
 #define FATAL_TABLE_FULL            2u		/* addr = how many entries a fixed table would have needed */
 #define FATAL_NOT_IMPLEMENTED       3u		/* addr = the number of a vtable slot that must never be reached */
 #define FATAL_FORMAT_NOT_IMPLEMENTED 4u		/* addr = the printf conversion character (formatmessage.c) an insert names */
+#define FATAL_C_STACK               5u		/* addr = the C stack pointer at a guest call: no room left above the floor (guestcall.c) */
+#define FATAL_GUEST_CALL_ARGS       6u		/* addr = the argument count a guest call asked for, past GUEST_CALL_MAX_ARGS */
 __attribute__((import_module("env"), import_name("fatal"), noreturn)) void fatal(u32 reason, u32 addr);
 
 
@@ -66,7 +68,7 @@ static inline void guestWritten(GPTR p, u32 n)
 	if (!n) return;
 	const unsigned char *pages = (const unsigned char *)CODE_PAGES;
 	for (u32 pg = p >> CODE_PAGE_BITS, last = (p + n - 1u) >> CODE_PAGE_BITS; pg <= last; pg++)
-		if (pages[pg]) { codeWrite(p, n); return; }
+		if (pages[pg] & CODE_PAGE_HERE) { codeWrite(p, n); return; }
 }
 
 #endif

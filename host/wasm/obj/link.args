@@ -38,6 +38,8 @@ obj/plugindll.o
 obj/aftereffects.o
 obj/heap.o
 obj/addressspace.o
+obj/guestcall.o
+obj/resources.o
 obj/cxxeh.o
 obj/unwind_x64.o
 obj/dpapi.o

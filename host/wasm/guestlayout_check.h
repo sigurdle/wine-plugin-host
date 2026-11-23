@@ -76,6 +76,7 @@ _Static_assert(__builtin_offsetof(struct GL_EXEC_STATE_host, codeWrite) == 720u,
 _Static_assert(__builtin_offsetof(struct GL_EXEC_STATE_host, codeWriteLen) == 728u, "EXEC_STATE_host.codeWriteLen");
 _Static_assert(__builtin_offsetof(struct GL_EXEC_STATE_host, wake) == 732u, "EXEC_STATE_host.wake");
 _Static_assert(__builtin_offsetof(struct GL_EXEC_STATE_host, busy) == 736u, "EXEC_STATE_host.busy");
-_Static_assert(sizeof(struct GL_EXEC_STATE_host) == 752u, "EXEC_STATE_host size");
+_Static_assert(__builtin_offsetof(struct GL_EXEC_STATE_host, icountTotal) == 752u, "EXEC_STATE_host.icountTotal");
+_Static_assert(sizeof(struct GL_EXEC_STATE_host) == 768u, "EXEC_STATE_host size");
 
 #endif

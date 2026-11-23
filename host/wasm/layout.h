@@ -196,13 +196,16 @@ static inline void censusAdd(u32 which, int delta)
 #define CS_SYS_COLORS 0x0000f0e0u
 
 /**
- * THE JIT'S CODE-PAGE TABLE — one byte per 4 KB page of the guest, nonzero where some compiled region
- * was translated from that page. ⚠ x86/Memory.js `CS_CODE_PAGES` and `CODE_PAGE_BITS` are the
- * authority. Read by hostimports.h `guestWritten`: a write the C makes into such a page has to drop
- * the translation, as every write the interpreter makes does.
+ * THE JIT'S CODE-PAGE TABLE -- one byte per 4 KB page of the guest. Bit CODE_PAGE_HERE: some compiled
+ * region was translated from this page. Bit CODE_PAGE_NEXT: the page AFTER this one was (the compiled
+ * barrier's one load); it says nothing about this page. x86/Memory.js `CS_CODE_PAGES`, `CODE_PAGE_BITS`,
+ * `CODE_PAGE_HERE` and `CODE_PAGE_NEXT` are the authority. Read by hostimports.h `guestWritten`: a write
+ * the C makes into a CODE_PAGE_HERE page has to drop the translation, as every write the interpreter
+ * makes does.
  */
 #define CODE_PAGES     0x00010000u
 #define CODE_PAGE_BITS 12u
+#define CODE_PAGE_HERE 1u
 
 #define TRUE 1
 #define FALSE 0
