@@ -40,7 +40,7 @@ typedef unsigned int u32;
  * the block map, and Memory.js takes the same numbers from it.
  */
 #define HOSTFN_DATA_BASE  (EXEC_BLOCKS + EXEC_COUNT * EXEC_BLOCK_BYTES)
-#define HOSTFN_DATA_BYTES 0x00020000u
+#define HOSTFN_DATA_BYTES 0x00030000u
 
 #define GDI_BASE    (HOSTFN_DATA_BASE + HOSTFN_DATA_BYTES)
 #define GDI_BYTES   0x00100000u						/* the DC, save, surface, object, font, PHOTOSHOP, DOOR, COM and WINDOW tables */

@@ -17,7 +17,7 @@
 -Wl,--export-table
 -Wl,--growable-table
 -Wl,--shared-memory
--Wl,--max-memory=2216624128
+-Wl,--max-memory=2216689664
 obj/user32.o
 obj/kernel32.o
 obj/codepages.o
@@ -41,6 +41,7 @@ obj/aftereffects.o
 obj/x86decode.o
 obj/x86core.o
 obj/x87.o
+obj/sse.o
 obj/heap.o
 obj/addressspace.o
 obj/guestcall.o
