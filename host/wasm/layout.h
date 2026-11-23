@@ -111,6 +111,8 @@ typedef unsigned int u32;
  * addressspace.c returns the address range and `GetSystemInfo` from.
  */
 #define CS_GUEST_SIZE 0x0000f160u
+/* The diagnostic write-watch's address, 0 or 0xffffffff for none (x86/Memory.js CS_WATCH_ADDR, `watchAddr`). */
+#define CS_WATCH_ADDR 0x0000f00cu
 #define CS_PROCESSORS 0x0000f164u
 /*
  * The guest's CAP and the heap bytes the HOST owns (x86/Memory.js CS_GUEST_CAP, CS_HEAP_HOSTBYTES,

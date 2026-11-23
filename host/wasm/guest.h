@@ -8,6 +8,7 @@
 #include "layout.h"
 #include "guestlayout.h"
 #include "execblock.h"
+#include "x86insn.h"
 #include "guestlayout_check.h"
 
 /**

@@ -63,6 +63,13 @@ __attribute__((import_module("env"), import_name("codeWrite"))) void codeWrite(G
  * and the recompiler may have translated what was there before. So such a write checks the
  * code-page table (layout.h) over the pages it covered, one load each, and only a hit leaves wasm.
  */
+/*
+ * The integer core's two (x86core.c). `tsc` is RDTSC's count, x86/CPU.js `readTsc`: a whole number
+ * under 2^53 on the clock every other time source of the guest reads. `watchHit` logs a write to the
+ * watched address (x86/Memory.js `watchAddr`, `watchLog`): the 32 bits now there and the instruction.
+ */
+__attribute__((import_module("env"), import_name("tsc"))) double tsc(void);
+__attribute__((import_module("env"), import_name("watchHit"))) void watchHit(u32 value, u32 ip);
 static inline void guestWritten(GPTR p, u32 n)
 {
 	if (!n) return;

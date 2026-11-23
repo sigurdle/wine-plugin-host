@@ -36,6 +36,8 @@ obj/displaypixels.o
 obj/colorservices.o
 obj/plugindll.o
 obj/aftereffects.o
+obj/x86decode.o
+obj/x86core.o
 obj/heap.o
 obj/addressspace.o
 obj/guestcall.o
