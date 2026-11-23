@@ -31,7 +31,7 @@ __attribute__((import_module("env"), import_name("say"))) void say(u32 what, u32
 #define FATAL_TABLE_FULL            2u		/* addr = how many entries a fixed table would have needed */
 #define FATAL_NOT_IMPLEMENTED       3u		/* addr = the number of a vtable slot that must never be reached */
 #define FATAL_FORMAT_NOT_IMPLEMENTED 4u		/* addr = the printf conversion character (formatmessage.c) an insert names */
-#define FATAL_C_STACK               5u		/* addr = the C stack pointer at a guest call: no room left above the floor (guestcall.c) */
+#define FATAL_C_STACK               5u		/* addr = the C stack pointer at a guest call or an x86Run: no room left above the floor (guestcall.c checkCStack) */
 #define FATAL_GUEST_CALL_ARGS       6u		/* addr = the argument count a guest call asked for, past GUEST_CALL_MAX_ARGS */
 __attribute__((import_module("env"), import_name("fatal"), noreturn)) void fatal(u32 reason, u32 addr);
 

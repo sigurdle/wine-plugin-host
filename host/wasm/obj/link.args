@@ -14,6 +14,8 @@
 -Wl,-z,stack-size=16384
 -Wl,--export=__stack_pointer
 -Wl,--export=__data_end
+-Wl,--export-table
+-Wl,--growable-table
 -Wl,--shared-memory
 -Wl,--max-memory=2216624128
 obj/user32.o
